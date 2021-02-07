@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/maxim/ProjectC++/Project_GeekBrains/CourseC++/HomeTask/Lesson3/main.cpp
+iostream
+-
+iomanip
+-
+
