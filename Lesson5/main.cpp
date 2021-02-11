@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void ChangedArray(int* array, int size){
+void ChangedArray(int* array, const int size){
     for (int i = 0; i < size; ++i){
         array[i] = 0 ^ 1 ^ array[i];
     }
@@ -38,25 +38,27 @@ bool SortArray(const int* arr, const int size){
     }
     return result;
 }
-void Shift(int* arr, int n, int s){
-    if (n > 0){
-        int temp = arr[s - 1];
-        for (int i = s - 1; i > 0; --i){
-            arr[i] = arr[i - 1];
+void Shift(int *arr, int n){
+    int size = sizeof(arr) - sizeof(arr[0]) + 1;
+    int temp = 0;
+    for (int i = 0; i < n; ++i){
+        for (int j = size - 1; j >= 0; --j){
+            if (j == size - 1){
+                temp = arr[size - 1];
+            }
+            else{
+                arr[j + 1] = arr[j];
+            }
         }
         arr[0] = temp;
     }
-    else{
-        int tmp = arr[0];
-        for (int i = 0; i < s - 1; ++i){
-            arr[i] = arr[i + 1];
-        }
-        arr[s - 1] = tmp;
-    }
 }
 
-int main() {
 
+int main() {
+/* Task 1. Задать целочисленный массив, состоящий из элементов 0 и 1.
+* Например: [ 1, 1, 0, 0, 1, 0, 1, 1, 0, 0 ]. Написать функцию, заменяющую
+ * в принятом массиве 0 на 1, 1 на 0; */
     const int length = 10;
     int array[length] {1, 1, 0, 1, 0, 0, 1, 1, 0, 0};
     ChangedArray(array, length);
@@ -64,6 +66,9 @@ int main() {
         cout << i << " ";
     }
     cout << endl;
+
+/* Task 2. Задать пустой целочисленный массив размером 8. Написать функцию,
+ * которая с помощью цикла заполнит его значениями 1 4 7 10 13 16 19 22; */
 
     const int size_array = 8;
     int mass[size_array];
@@ -90,14 +95,14 @@ int main() {
  * при этом метод должен циклически сместить все элементы массива на n позиций.
  * */
     const int size_shift_array = 5;
-    const int n = -1; //Direction of shift
+    int n = 2; //Direction of shift
     int shift_array[size_shift_array] {1, 2, 3, 4, 5};
     cout << "Array before changes: " << endl;
     for (const int i : shift_array){
         cout << i << " ";
     }
     cout << endl << "Array after changes: " << endl;
-    Shift(shift_array, n, size_shift_array);
+    Shift(shift_array, n);
     for (const int i : shift_array){
         cout << i << " ";
     }
