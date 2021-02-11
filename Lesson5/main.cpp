@@ -4,12 +4,7 @@ using namespace std;
 
 void ChangedArray(int* array, int size){
     for (int i = 0; i < size; ++i){
-        if (array[i] == 0){
-            array[i] = 1;
-        }
-        else{
-            array[i] = 0;
-        }
+        array[i] = 0 ^ 1 ^ array[i];
     }
 }
 void FillIn(int* arr, const int length){
@@ -43,6 +38,22 @@ bool SortArray(const int* arr, const int size){
     }
     return result;
 }
+void Shift(int* arr, int n, int s){
+    if (n > 0){
+        int temp = arr[s - 1];
+        for (int i = s - 1; i > 0; --i){
+            arr[i] = arr[i - 1];
+        }
+        arr[0] = temp;
+    }
+    else{
+        int tmp = arr[0];
+        for (int i = 0; i < s - 1; ++i){
+            arr[i] = arr[i + 1];
+        }
+        arr[s - 1] = tmp;
+    }
+}
 
 int main() {
 
@@ -72,8 +83,25 @@ int main() {
 
     const int size_arr2 = 5;
     int arr2[size_arr2] {10, 1, 2, 3, 4};
-    cout << "Operation result = " << SortArray(arr2, size_arr2);
+    cout << "Operation result = " << SortArray(arr2, size_arr2) << endl;
 
+/* Task 4. * Написать функцию, которой на вход подаётся одномерный
+ * массив и число n (может быть положительным, или отрицательным),
+ * при этом метод должен циклически сместить все элементы массива на n позиций.
+ * */
+    const int size_shift_array = 5;
+    const int n = -1; //Direction of shift
+    int shift_array[size_shift_array] {1, 2, 3, 4, 5};
+    cout << "Array before changes: " << endl;
+    for (const int i : shift_array){
+        cout << i << " ";
+    }
+    cout << endl << "Array after changes: " << endl;
+    Shift(shift_array, n, size_shift_array);
+    for (const int i : shift_array){
+        cout << i << " ";
+    }
+    cout << endl;
 
     return 0;
 }
