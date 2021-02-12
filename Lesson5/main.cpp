@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdarg.h>
+#include <vector>
 
 using namespace std;
 
@@ -39,21 +41,50 @@ bool SortArray(const int* arr, const int size){
     return result;
 }
 void Shift(int *arr, int n){
-    int size = sizeof(arr) - sizeof(arr[0]) + 1;
+    int size_array = sizeof(arr) + 1;
     int temp = 0;
-    for (int i = 0; i < n; ++i){
-        for (int j = size - 1; j >= 0; --j){
-            if (j == size - 1){
-                temp = arr[size - 1];
+    if (n == 0) cout << "Error input shift " << n << " must be > or < 0" << endl;
+    if (n > 0){
+        for (int i = 0; i < n; ++i){
+            for (int j = size_array - 1; j >= 0; --j){
+                if (arr[j] == arr[size_array - 1]){
+                    temp = arr[size_array - 1];
+                }
+                else{
+                    arr[j + 1] = arr[j];
+                }
             }
-            else{
-                arr[j + 1] = arr[j];
-            }
+            arr[0] = temp;
         }
-        arr[0] = temp;
     }
+    else{
+        n = -n;
+        for (int i = 0; i < n; ++i){
+            for (int j = 0; j < size_array; ++j){
+                if (arr[j] == arr[0]){
+                    temp = arr[0];
+                }
+                else{
+                    arr[j - 1] = arr[j];
+                }
+            }
+            arr[size_array - 1] = temp;
+        }
+    }
+
 }
 
+vector<int> FuncWithValue(int s, ...){
+    va_list ap;
+    va_start(ap, s);
+    vector<int> exotic_vector;
+    for (int i = 0; i < s; ++i){
+        exotic_vector.push_back(0 ^ 1 ^ va_arg(ap, int));
+    }
+
+    va_end(ap);
+    return exotic_vector;
+}
 
 int main() {
 /* Task 1. Задать целочисленный массив, состоящий из элементов 0 и 1.
@@ -94,8 +125,10 @@ int main() {
  * массив и число n (может быть положительным, или отрицательным),
  * при этом метод должен циклически сместить все элементы массива на n позиций.
  * */
-    const int size_shift_array = 5;
-    int n = 2; //Direction of shift
+    const int size_shift_array = 5; //Size array for shift
+    cout << "Input shift direction" << endl;
+    int n = 0; //Shift direction
+//    cin >> n;
     int shift_array[size_shift_array] {1, 2, 3, 4, 5};
     cout << "Array before changes: " << endl;
     for (const int i : shift_array){
@@ -108,5 +141,45 @@ int main() {
     }
     cout << endl;
 
+/* Task 5. Написать функцию из первого задания так, чтобы она работала
+ * с аргументом переменной длины. */
+    const int task5_size = 10;
+    vector<int> result = FuncWithValue(task5_size, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0);
+    cout << "Result task 5 = " << endl;
+    for (const int& r : result){
+        cout << r << " ";
+    }
+    cout << endl;
+
     return 0;
 }
+
+
+/* Task 6. ** Написать все функции в отдельных файлах в одном пространстве
+ * имён, вызвать их на исполнение в основном файле программы используя
+ * указатели на функции. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
