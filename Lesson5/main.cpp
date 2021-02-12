@@ -1,6 +1,8 @@
 #include <iostream>
-#include <stdarg.h>
+#include <cstdarg>
 #include <vector>
+
+#include "ChangedArray.h"
 
 using namespace std;
 
@@ -151,13 +153,28 @@ int main() {
     }
     cout << endl;
 
-    return 0;
-}
-
-
 /* Task 6. ** Написать все функции в отдельных файлах в одном пространстве
  * имён, вызвать их на исполнение в основном файле программы используя
  * указатели на функции. */
+
+    using namespace Lesson5; {
+        void (*ptr_changed_array)(int *, int) = Task1;
+        const int length = 10;
+        int array[length]{1, 1, 0, 1, 0, 0, 1, 1, 0, 0};
+        ptr_changed_array(array, length);
+        cout << "Using namespace Lesson5" << endl;
+        for (const int ar : array){
+            cout << ar << " ";
+        }
+        cout << endl;
+
+    }
+
+
+
+
+    return 0;
+}
 
 
 
