@@ -3,6 +3,10 @@
 #include <vector>
 
 #include "ChangedArray.h"
+#include "FillInn.h"
+#include "SortArray.h"
+#include "ShiftArray.h"
+#include "FuncWithValue.h"
 
 using namespace std;
 
@@ -42,8 +46,7 @@ bool SortArray(const int* arr, const int size){
     }
     return result;
 }
-void Shift(int *arr, int n){
-    int size_array = sizeof(arr) + 1;
+void Shift(int *arr, int size_array, int n){
     int temp = 0;
     if (n == 0) cout << "Error input shift " << n << " must be > or < 0" << endl;
     if (n > 0){
@@ -130,14 +133,14 @@ int main() {
     const int size_shift_array = 5; //Size array for shift
     cout << "Input shift direction" << endl;
     int n = 0; //Shift direction
-//    cin >> n;
+    cin >> n;
     int shift_array[size_shift_array] {1, 2, 3, 4, 5};
     cout << "Array before changes: " << endl;
     for (const int i : shift_array){
         cout << i << " ";
     }
     cout << endl << "Array after changes: " << endl;
-    Shift(shift_array, n);
+    Shift(shift_array, size_shift_array, n);
     for (const int i : shift_array){
         cout << i << " ";
     }
@@ -162,11 +165,55 @@ int main() {
         const int length = 10;
         int array[length]{1, 1, 0, 1, 0, 0, 1, 1, 0, 0};
         ptr_changed_array(array, length);
-        cout << "Using namespace Lesson5" << endl;
+        cout << "Using namespace Lesson5 - Task 1" << endl;
         for (const int ar : array){
             cout << ar << " ";
         }
         cout << endl;
+
+        void (*ptr_fill)(int*, int) = Task2;
+        const int size_array = 8;
+        int mass[size_array];
+        ptr_fill(mass, size_array);
+        cout << "Using namespace Lesson5 - Task 2" << endl;
+        for (const int& i : mass){
+            cout << i << " ";
+        }
+        cout << endl;
+
+        bool (*ptr_sort_array)(const int*, int) = Lesson5::SortArray;
+        const int size_arr2 = 5;
+        int arr2[size_arr2] {10, 1, 2, 3, 4};
+        cout << "Using namespace Lesson5 - Task 3" << endl;
+        cout << "Operation result = " << ptr_sort_array(arr2, size_arr2) << endl;
+
+        cout << "Using namespace Lesson5 - Task 4" << endl;
+        void (*ptr_shift_array)(int*, int, int) = Lesson5::Shift;
+        const int size_shift_array = 5; //Size array for shift
+        int n = 2; //Shift direction
+        int shift_array[size_shift_array] {1, 2, 3, 4, 5};
+        cout << "Array before changes: " << endl;
+        for (const int i : shift_array){
+            cout << i << " ";
+        }
+        cout << endl << "Array after changes: " << endl;
+        ptr_shift_array(shift_array, size_shift_array, n);
+        for (const int i : shift_array){
+            cout << i << " ";
+        }
+        cout << endl;
+
+        cout << "Using namespace Lesson5 - Task 5" << endl;
+        vector<int> (*ptr_func_value)(int, ...) = Lesson5::FuncWithValue;
+        const int task5_size = 10;
+        vector<int> result = ptr_func_value(task5_size, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0);
+        cout << "Result task 5 = " << endl;
+        for (const int& r : result){
+            cout << r << " ";
+        }
+        cout << endl;
+
+
 
     }
 
