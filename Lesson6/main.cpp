@@ -46,6 +46,8 @@ int main() {
     const int length = 512;
     char text_part1[length];
     char text_part2[length];
+
+    //Я сделал два файла с текстом чтобы не писать ручками текст в коде.
     ifstream some_file1 ("words1.txt"); //the file contains some text
     ifstream some_file2 ("words2.txt"); // the file contains some text
     if (some_file1.is_open() && some_file2.is_open()){
