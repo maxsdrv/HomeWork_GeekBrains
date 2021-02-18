@@ -48,11 +48,7 @@ void FindWord(const char* flags[]){
         string temp;
         while (file >> temp){
             if (temp == word){
-                cout << "Successful" << temp << endl;
-                break;
-            }
-            else{
-                cout << "Word didn't find" << endl;
+                cout << "Successful! Word with name " << "' " << temp << " '" << "is in this file" << endl;
                 break;
             }
         }
@@ -65,7 +61,7 @@ int main(const int argc, const char* argv[]) {
 /* Task 1. Написать программу, которая создаст два
  * текстовых файла, примерно по 50-100 символов в каждом
  * (особого значения не имеет); */
-    /*const int length = 512;
+    const int length = 512;
     char text_part1[length];
     char text_part2[length];
 
@@ -82,23 +78,30 @@ int main(const int argc, const char* argv[]) {
     if (text1.is_open() && text2.is_open()){
         text1 << text_part1;
         text2 << text_part2;
-    } */
+    }
 
 
 /* Task 2.   Написать функцию, «склеивающую» эти файлы, предварительно
  * буферизуя их содержимое в динамически выделенный сегмент памяти нужного размера. */
 
-//    Join(text_part1, text_part2);
+    Join(text_part1, text_part2);
 
 /* Task 3.  * Написать программу, которая проверяет присутствует
  * ли указанное пользователем при запуске программы слово в указанном
  * пользователем файле (для простоты работаем только с латиницей). */
     if (argc < 3){
         cout << "Error, please input two arguments" << endl;
+        cout << "You should input some word and specify path to it" <<endl;
     }
     else FindWord(argv);
 
 
 
+
     return 0;
 }
+
+
+
+
+
