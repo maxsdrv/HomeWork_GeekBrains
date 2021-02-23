@@ -1,0 +1,3 @@
+/home/maxim/ProjectC++/Project_GeekBrains/CourseC++/Project/TTT/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/maxim/ProjectC++/Project_GeekBrains/CourseC++/Project/TTT/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/maxim/ProjectC++/Project_GeekBrains/CourseC++/Project/TTT/cmake-build-debug/CMakeFiles/TTT.dir

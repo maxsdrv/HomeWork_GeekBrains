@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/maxim/ProjectC++/Project_GeekBrains/CourseC++/Project/TTT/main.cpp
+iostream
+-
+SFML/Graphics.hpp
+-
+string
+-
+

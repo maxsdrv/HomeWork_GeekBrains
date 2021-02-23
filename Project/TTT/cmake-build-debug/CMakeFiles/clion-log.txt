@@ -1,0 +1,5 @@
+/home/maxim/clion/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/maxim/ProjectC++/Project_GeekBrains/CourseC++/Project/TTT
+-- Found SFML 2.5.1 in /usr/lib/x86_64-linux-gnu/cmake/SFML
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/maxim/ProjectC++/Project_GeekBrains/CourseC++/Project/TTT/cmake-build-debug
