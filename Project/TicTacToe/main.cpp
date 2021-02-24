@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <random>
 
 using std::cout;
 using std::cin;
@@ -28,7 +29,16 @@ bool isvalid(Field &field, int x, int y){
 bool isempty(Field &field, int x, int y){
     return true;
 }
-bool check_line(Field &field, int x, int y, int vx, int vy, PLAYER c){
+bool check_line(Field &field, int x, int y, int vx, int vy, int len, PLAYER c){
+    const int end_x = x + (len - 1) * vx;
+    const int end_y = y + (len - 1) * vy;
+    if (!isvalid(field, end_x, end_y)){
+        return false;
+    }
+    for (int i = 0; i < len; ++i){
+        if (getval(field.map, (y + i * vy), (x + i * vx)) != c)
+            return false;
+    }
     return true;
 }
 
@@ -45,7 +55,7 @@ void init(Field &field){
     }
 }
 void print(Field &field){
-    system("clear");
+    system("cls");
     cout << "---------------" << endl;
     for (int i = 0; i < field.szY; ++i){
         cout << "|";
@@ -67,10 +77,13 @@ void human_move(Field &field){
     setval(field.map, x, y, HUMAN);
 }
 void ai_move(Field &field){
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int>dist(0, 3);
     int x, y;
     do{
-        x = rand() % field.szX;
-        y = rand() % field.szY;
+        x = dist(mt);
+        y = dist(mt);
 
     }while (!isempty(field, x, y));
     setval(field.map, x, y, AI);
@@ -79,10 +92,10 @@ void ai_move(Field &field){
 bool check_win(Field &field, PLAYER player){
     for (int x = 0; x < field.szX; ++x){
         for (int y = 0; y < field.szY; ++y){
-            if (check_line(field, x, y, 1, 0, player)) return true;
-            if (check_line(field, x, y, 0, 1, player)) return true;
-            if (check_line(field, x, y, 1, 1, player)) return true;
-            if (check_line(field, x, y, 1, -1, player)) return true;
+            if (check_line(field, x, y, 1, 0, field.towin, player)) return true;
+            if (check_line(field, x, y, 0, 1, field.towin, player)) return true;
+            if (check_line(field, x, y, 1, 1, field.towin, player)) return true;
+            if (check_line(field, x, y, 1, -1, field.towin, player)) return true;
         }
     }
     return false;
@@ -107,6 +120,12 @@ bool check_game(Field &field, PLAYER p, const std::string &winString){
     }
     return false;
 }
+void clear_game(Field &field){
+    for (int i = 0; i < sizeof(field.map); ++i){
+        delete[] field.map[i];
+    }
+    delete[] field.map;
+}
 
 void tictactoe(){
     Field field;
@@ -124,24 +143,17 @@ void tictactoe(){
         std::string answer;
         cout << "Play again?" << endl;
         cin >> answer;
-        if (answer != "y") break;
+        if (answer != "y"){
+            clear_game(field);
+            break;
+        }
     }
-}
-void clear_game(Field &field){
-    for (int i = 0; i < sizeof(field.map); ++i){
-        delete[] field.map[i];
-    }
-    delete[] field.map;
 }
 
 int main() {
-    srand(time(0));
     Field field;
-    init(field);
-    print(field);
     tictactoe();
 
-    clear_game(field); // delete memory allocation
 
     return 0;
 }
