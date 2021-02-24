@@ -34,6 +34,10 @@ int main() {
     int x = 0, y = 0;
     //cin >> x >> y;
     cout << ACCESS(array, x, y) << endl;
+    for (int i = 0; i < 3; ++i){
+      delete[] array[i];
+    }
+    delete[] array;
 
 
     return 0;
