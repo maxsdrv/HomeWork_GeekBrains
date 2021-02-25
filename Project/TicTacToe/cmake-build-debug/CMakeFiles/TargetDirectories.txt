@@ -1,3 +1,3 @@
-D:/ms.sidorov.project/C_Plus_GB/HomeWork_GeekBrains/HomeWork_GeekBrains/Project/TicTacToe/cmake-build-debug/CMakeFiles/TicTacToe.dir
-D:/ms.sidorov.project/C_Plus_GB/HomeWork_GeekBrains/HomeWork_GeekBrains/Project/TicTacToe/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/ms.sidorov.project/C_Plus_GB/HomeWork_GeekBrains/HomeWork_GeekBrains/Project/TicTacToe/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/maxim/ProjectC++/Project_GeekBrains/CourseC++/HomeWork_GeekBrains/Project/TicTacToe/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/maxim/ProjectC++/Project_GeekBrains/CourseC++/HomeWork_GeekBrains/Project/TicTacToe/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/maxim/ProjectC++/Project_GeekBrains/CourseC++/HomeWork_GeekBrains/Project/TicTacToe/cmake-build-debug/CMakeFiles/TicTacToe.dir

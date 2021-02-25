@@ -1,9 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/TicTacToe.dir/main.cpp.obj"
-  "TicTacToe.exe"
-  "TicTacToe.exe.manifest"
+  "CMakeFiles/TicTacToe.dir/main.cpp.o"
+  "TicTacToe"
   "TicTacToe.pdb"
-  "libTicTacToe.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -30,6 +30,17 @@ PLAYER getval(PLAYER **map, int row, int column){
     return map[column][row];
 }
 
+bool is_empty(Field &field, const int x, const int y){
+    if (getval(field.map, x, y) == EMPTY) return true;
+    return false;
+}
+
+bool is_valid(Field &field, const int x, const int y){
+    if ((x >= 0 && x < field.szX) && (y >= 0 && y < field.szY))
+        return true;
+    return false;
+}
+
 void init(Field &field, int x, int y){
     field.towin = 3;
     field.szX = x;
@@ -43,7 +54,7 @@ void init(Field &field, int x, int y){
     }
 }
 void print(Field &field){
-    system("cls");
+    system("clear");
     cout << "---------------" << endl;
     for (int i = 0; i < field.szY; ++i){
         cout << "|";
@@ -52,6 +63,16 @@ void print(Field &field){
         }
         cout << endl;
     }
+}
+
+void human_move(Field &field){
+    int x = 0, y = 0;
+    do{
+        cout << "Enter number from 1 to " << field.szY << endl;
+        cin >> x >> y;
+        x--, y--;
+    }while (!is_valid(field, x, y) && (!is_empty(field, x, y)));
+    setval(field.map, y, x, HUMAN);
 }
 
 void clear_game(Field &field){
@@ -65,6 +86,8 @@ void run_game(){
     Field field;
     while(true){
         init(field, size_fieldX, size_fieldY);
+        print(field);
+        human_move(field);
         print(field);
         break;
     }
