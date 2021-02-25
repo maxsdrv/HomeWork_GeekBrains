@@ -80,6 +80,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/ms.sidorov.project/C_Plus_GB/HomeWork_GeekBrains/HomeWork_GeekBrains/Project/TicTacToe/Game.h">
+			<Option target="TicTacToe"/>
+		</Unit>
 		<Unit filename="D:/ms.sidorov.project/C_Plus_GB/HomeWork_GeekBrains/HomeWork_GeekBrains/Project/TicTacToe/main.cpp">
 			<Option target="TicTacToe"/>
 		</Unit>

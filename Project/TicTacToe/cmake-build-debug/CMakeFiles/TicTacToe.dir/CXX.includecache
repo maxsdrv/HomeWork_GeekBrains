@@ -6,11 +6,17 @@
 
 #IncludeRegexTransform: 
 
-D:/ms.sidorov.project/C_Plus_GB/HomeWork_GeekBrains/HomeWork_GeekBrains/Project/TicTacToe/main.cpp
+D:/ms.sidorov.project/C_Plus_GB/HomeWork_GeekBrains/HomeWork_GeekBrains/Project/TicTacToe/Game.h
 iostream
 -
 string
 -
-ctime
+random
 -
+algorithm
+-
+
+D:/ms.sidorov.project/C_Plus_GB/HomeWork_GeekBrains/HomeWork_GeekBrains/Project/TicTacToe/main.cpp
+Game.h
+D:/ms.sidorov.project/C_Plus_GB/HomeWork_GeekBrains/HomeWork_GeekBrains/Project/TicTacToe/Game.h
 
