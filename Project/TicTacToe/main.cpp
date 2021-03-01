@@ -2,12 +2,7 @@
 
 
 int main() {
-    const int szX = 3;
-    const int szY = 3;
-    Field field;
-    init(field, szX, szY);
-    Print(field);
-
+    run_game();
 
     return 0;
 }
