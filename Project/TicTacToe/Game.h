@@ -24,6 +24,7 @@ typedef struct{
     vector map;
 }Field;
 
+
 bool is_valid(Field &field, int x, int y){
     return x >= 0 && x < field.szX && y >= 0 && y < field.szY;
 }
@@ -62,6 +63,56 @@ bool win_check(Field &field, PLAYER player){
     for (int x = 0; x < field.szX; ++x){
         for (int y = 0; y < field.szY; ++y){
             if (line_check(field, y, x, 1, 0, player)) return true;
+            if (line_check(field, y, x, 0, 1, player)) return true;
+            if (line_check(field, y, x, 1, 1, player)) return true;
+            if (line_check(field, y, x, 1, -1, player)) return true;
+        }
+    }
+    return false;
+}
+
+bool ai_random_set(Field &field){
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(0, 3);
+    int x = 0, y = 0;
+    if (std::find(field.map.begin(), field.map.end(), HUMAN) != field.map.end()){
+       x = dist(mt);
+       y = dist(mt);
+       if (!is_valid(field, x, y && !is_empty(field, x, y))){
+            return true;
+       }
+    }
+    return false;
+}
+
+bool ai_win_check(Field &field){
+    for (int y = 0; y < field.szY; ++y){
+        for (int x = 0; x < field.szX; ++x){
+            if (is_empty(field, x, y)){
+                field.map.at(y).at(x) = AI;
+                if (win_check(field, AI)){
+                    return true;
+                }
+                field.map.at(y).at(x) = EMPTY;
+            }
+
+        }
+    }
+    return false;
+}
+
+bool human_win_check(Field &field){
+    for (int y = 0; y < field.szY; ++y){
+        for (int x = 0; x < field.szX; ++x){
+            if (is_empty(field, x, y)){
+                field.map.at(y).at(x) = HUMAN;
+                if (win_check(field, HUMAN)){
+                    field.map.at(y).at(x) = AI;
+                    return true;
+                }
+                field.map.at(y).at(x) = EMPTY;
+            }
         }
     }
     return false;
@@ -80,26 +131,22 @@ bool game_check(Field &field, PLAYER dot, const std::string &winString){
 }
 
 void ai_move(Field &field){
-    int x, y;
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> dist(0, 3);
-    do {
-        x = dist(mt);
-        y = dist(mt);
-    }while (!is_empty(field, x, y));
-    field.map[y][x] = AI;
+    int count = 0;
+    //if (std::find)
+    ai_win_check(field);
+    human_win_check(field);
 }
 
 
 void human_move(Field &field){
-    int x = 1;
-    int y = 1;
+    int x = 0;
+    int y = 0;
     do {
-        cout << "Enter coordinates X or Y from 1 to " << field.szY;
+        cout << "Enter coordinates X or Y from 1 to " << field.szY << endl;
+        cin >> x >> y;
         x--; y--;
     }while (!is_valid(field, x, y) || !is_empty(field, x, y));
-    field.map[x][y] = HUMAN;
+        field.map[y][x] = HUMAN;
 }
 
 void Print(Field &field){
@@ -146,8 +193,12 @@ void run_game(){
         cin >> answer;
         std::transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 
-        if (answer.find('y') != std::string::npos)
+        if (answer.find('y') != 0) {
+            field.map.clear();
             break;
+        }
+
+        field.map.clear();
     }
 }
 
