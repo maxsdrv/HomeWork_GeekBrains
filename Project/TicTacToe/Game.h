@@ -12,16 +12,20 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-const int cst_row = 3;
-const int cst_column = 3;
 
 enum PLAYER {HUMAN = 'X', AI = '0', EMPTY = '_'};
 using vector = std::vector<std::vector<PLAYER>>;
+
+typedef struct {
+   vector comb;
+}Combination;
+
 typedef struct{
     int szX;
     int szY;
     int to_win;
     vector map;
+    std::map<Combination, int> save_comb;
 }Field;
 
 
@@ -71,43 +75,39 @@ bool win_check(Field &field, PLAYER player){
     return false;
 }
 
-bool ai_random_set(Field &field){
+void ai_learning(Field &field, int &row, int &column){
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_int_distribution<int> dist(0, 3);
-    int x = 0, y = 0;
-    if (std::find(field.map.begin(), field.map.end(), HUMAN) != field.map.end()){
-       x = dist(mt);
-       y = dist(mt);
-       if (!is_valid(field, x, y && !is_empty(field, x, y))){
-            return true;
-       }
+    row = dist(mt);
+    column = dist(mt);
+    while (!is_valid(field, column, row) &&
+           !is_empty(field, column, row)){
+        column = dist(mt);
+        row = dist(mt);
     }
-    return false;
 }
 
-bool ai_win_check(Field &field){
-    for (int y = 0; y < field.szY; ++y){
-        for (int x = 0; x < field.szX; ++x){
-            if (is_empty(field, x, y)){
+bool ai_win_check(Field &field) {
+    for (int y = 0; y < field.szY; y++) {
+        for (int x = 0; x < field.szX; x++) {
+            if (is_empty(field, x, y)) {
                 field.map.at(y).at(x) = AI;
-                if (win_check(field, AI)){
+                if (win_check(field, AI))
                     return true;
-                }
                 field.map.at(y).at(x) = EMPTY;
             }
-
         }
     }
     return false;
 }
 
-bool human_win_check(Field &field){
-    for (int y = 0; y < field.szY; ++y){
-        for (int x = 0; x < field.szX; ++x){
-            if (is_empty(field, x, y)){
+bool human_win_check(Field &field) {
+    for (int y = 0; y < field.szY; y++) {
+        for (int x = 0; x < field.szX; x++) {
+            if (is_empty(field, x, y)) {
                 field.map.at(y).at(x) = HUMAN;
-                if (win_check(field, HUMAN)){
+                if (win_check(field, HUMAN)) {
                     field.map.at(y).at(x) = AI;
                     return true;
                 }
@@ -117,6 +117,7 @@ bool human_win_check(Field &field){
     }
     return false;
 }
+
 
 bool game_check(Field &field, PLAYER dot, const std::string &winString){
     if (win_check(field, dot)){
@@ -131,8 +132,6 @@ bool game_check(Field &field, PLAYER dot, const std::string &winString){
 }
 
 void ai_move(Field &field){
-    int count = 0;
-    //if (std::find)
     ai_win_check(field);
     human_win_check(field);
 }
@@ -162,9 +161,11 @@ void Print(Field &field){
 
 
 void init(Field &field){
-    field.to_win = 3;
-    field.szX = 3;
-    field.szY = 3;
+    const int cst_row = 3;
+    const int cst_column = 3;
+    field.to_win = cst_column;
+    field.szX = cst_column;
+    field.szY = cst_row;
     for (int i = 0; i < field.szY; ++i){
         field.map.resize(field.szY);
         for (int j = 0; j < field.szX; ++j){
@@ -176,6 +177,7 @@ void init(Field &field){
 
 void run_game(){
     Field field;
+    Combination cmb;
 
     while (true){
         init(field);
