@@ -6,7 +6,6 @@
 #include <random>
 #include <algorithm>
 #include <vector>
-#include <map>
 
 using std::cout;
 using std::cin;
@@ -16,21 +15,21 @@ using std::endl;
 enum PLAYER {HUMAN = 'X', AI = '0', EMPTY = '_'};
 using vector = std::vector<std::vector<PLAYER>>;
 
-typedef struct {
-   vector comb;
-}Combination;
 
 typedef struct{
     int szX;
     int szY;
     int to_win;
     vector map;
-    std::map<Combination, int> save_comb;
+    vector saved_map;
 }Field;
 
 
 bool is_valid(Field &field, int x, int y){
-    return x >= 0 && x < field.szX && y >= 0 && y < field.szY;
+    if(x >= 0 && x < field.szX && y >= 0 && y < field.szY){
+        return true;
+    }
+    return false;
 }
 
 bool is_empty(Field &field, int x, int y){
@@ -75,17 +74,28 @@ bool win_check(Field &field, PLAYER player){
     return false;
 }
 
-void ai_learning(Field &field, int &row, int &column){
+bool saved_moves(Field &field, int row, int column){
+    if (!is_valid(field, column, row) || !is_empty(field, column, row)) {
+        return false;
+    }
+    else if (field.saved_map[column][row] == AI){
+        return false;
+    }
+    return true;
+}
+
+void ai_learning(Field &field){
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_int_distribution<int> dist(0, 3);
-    row = dist(mt);
-    column = dist(mt);
-    while (!is_valid(field, column, row) &&
-           !is_empty(field, column, row)){
-        column = dist(mt);
+    int row = dist(mt);
+    int column = dist(mt);
+    while (!saved_moves(field, row, column)){
         row = dist(mt);
+        column = dist(mt);
     }
+    field.saved_map.at(row).at(column) = AI;
+    field.map.at(row).at(column) = AI;
 }
 
 bool ai_win_check(Field &field) {
@@ -132,6 +142,15 @@ bool game_check(Field &field, PLAYER dot, const std::string &winString){
 }
 
 void ai_move(Field &field){
+    int count = 0;
+    for (const auto &row : field.map){
+        for (const auto &fm : row){
+            if (fm == HUMAN){
+                ++count;
+            }
+        }
+    }
+    if (count == 1) ai_learning(field);
     ai_win_check(field);
     human_win_check(field);
 }
@@ -172,12 +191,19 @@ void init(Field &field){
             field.map[i].push_back(EMPTY);
         }
     }
-
+    if (field.saved_map.empty()) {
+        for (int i = 0; i < field.szY; ++i) {
+            field.saved_map.resize(field.szX);
+            for (int j = 0; j < field.szX; ++j) {
+                field.saved_map[i].push_back(EMPTY);
+            }
+        }
+    }
 }
+
 
 void run_game(){
     Field field;
-    Combination cmb;
 
     while (true){
         init(field);
@@ -202,6 +228,7 @@ void run_game(){
 
         field.map.clear();
     }
+    field.saved_map.clear();
 }
 
 
